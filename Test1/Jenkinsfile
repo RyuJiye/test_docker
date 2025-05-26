@@ -69,6 +69,22 @@ pipeline {
 
         success {
             echo "Build and test succeeded!"
+            sh 'echo "✅ Build #$BUILD_NUMBER was successful at $(date)" > build_result.txt'
+            
+            emailext (
+                subject: "✅ Jenkins Build #${env.BUILD_NUMBER} 성공",
+                body: """\
+				✅ Build #${env.BUILD_NUMBER} 성공
+				
+				결과 파일은 첨부된 .txt에서 확인하세요.
+				
+				요약:
+				- 컴파일 성공
+				- 테스트 결과: ${REPORT_DIR}/test-output.txt
+				""",
+                to: 'jihoon20130@gmail.com',
+                attachmentsPattern: 'build_result.txt'
+            )
         }
     }
 }

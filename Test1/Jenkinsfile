@@ -62,6 +62,7 @@ pipeline {
             junit "${REPORT_DIR}/**/*.xml"
             archiveArtifacts artifacts: "${REPORT_DIR}/**/*", allowEmptyArchive: true
             
+            
             sh 'echo "✅ Build #$BUILD_NUMBER was successful at $(date)" > build_result.txt'
         }
 

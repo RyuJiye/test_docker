@@ -31,7 +31,7 @@ pipeline {
             steps {
                 sh '''
                     echo "[+] Compiling source files..."
-                    cd Test1
+                    cd Test2
                     find src -name "*.java" > sources.txt
                     javac -encoding UTF-8 -d ../${CLASS_DIR} -cp ../${JUNIT_JAR_PATH} @sources.txt
                 '''
@@ -61,9 +61,6 @@ pipeline {
             echo "[*] Archiving test results..."
             junit "${REPORT_DIR}/**/*.xml"
             archiveArtifacts artifacts: "${REPORT_DIR}/**/*", allowEmptyArchive: true
-            
-            
-            sh 'echo "✅ Build #$BUILD_NUMBER was successful at $(date)" > build_result.txt'
         }
 
         failure {
@@ -72,23 +69,19 @@ pipeline {
 
         success {
             echo "Build and test succeeded!"
-            
             emailext (
-                subject: "✅ Jenkins Build #${env.BUILD_NUMBER} 성공",
-                body: """\
-				✅ Build #${env.BUILD_NUMBER} 성공
-				
-				결과 파일은 첨부된 .txt에서 확인하세요.
-				
-				요약:
-				- 컴파일 성공
-				- 테스트 결과: ${REPORT_DIR}/test-output.txt
-				""",
-                to: 'jihoon20130@gmail.com',
-                from: 'jihoon20130@gmail.com',
-			    replyTo: 'jihoon20130@gmail.com',
-			    attachmentsPattern: '**/build_result.txt'
-            )
+	            subject: "[SUCCESS] ${env.JOB_NAME} #${env.BUILD_NUMBER}",
+	            body: """
+	                Build succeeded!
+	
+	                Job: ${env.JOB_NAME}
+	                Build number: ${env.BUILD_NUMBER}
+	                URL: ${env.BUILD_URL}
+	            """,
+	            to: '받는사람@example.com',
+	            attachLog: false,
+	            attachmentsPattern: "${REPORT_DIR}/test-output.txt"
+        	)
         }
     }
 }

@@ -61,6 +61,15 @@ pipeline {
             echo "[*] Archiving test results..."
             junit "${REPORT_DIR}/**/*.xml"
             archiveArtifacts artifacts: "${REPORT_DIR}/**/*", allowEmptyArchive: true
+            
+            sh 'echo "✅ Build #$BUILD_NUMBER was successful at $(date)" > build_result.txt'
+
+	        emailext (
+	            subject: "📨 Jenkins Build #${env.BUILD_NUMBER} 메일 테스트",
+	            body: "이 메일은 항상 전송됩니다.\n파일 첨부 확인용입니다.",
+	            to: 'jihoon20130@gmail.com',
+	            attachmentsPattern: 'build_result.txt'
+	        )
         }
 
         failure {

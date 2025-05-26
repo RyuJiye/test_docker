@@ -79,6 +79,7 @@ pipeline {
                 URL: ${env.BUILD_URL}
 	            """,
 	            to: 'jihoon20130@gmail.com',
+	            
 	            attachLog: false,
 	            attachmentsPattern: "${REPORT_DIR}/test-output.txt"
         	)

@@ -71,14 +71,14 @@ pipeline {
             echo "Build and test succeeded!"
             emailext (
 	            subject: "[SUCCESS] ${env.JOB_NAME} #${env.BUILD_NUMBER}",
-	            body: """
-	                Build succeeded!
-	
-	                Job: ${env.JOB_NAME}
-	                Build number: ${env.BUILD_NUMBER}
-	                URL: ${env.BUILD_URL}
+	            body: """\
+                Build succeeded!
+
+                Job: ${env.JOB_NAME}
+                Build number: ${env.BUILD_NUMBER}
+                URL: ${env.BUILD_URL}
 	            """,
-	            to: '받는사람@example.com',
+	            to: 'jihoon20130@gmail.com',
 	            attachLog: false,
 	            attachmentsPattern: "${REPORT_DIR}/test-output.txt"
         	)

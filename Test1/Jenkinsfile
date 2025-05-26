@@ -84,7 +84,9 @@ pipeline {
 				- 테스트 결과: ${REPORT_DIR}/test-output.txt
 				""",
                 to: 'jihoon20130@gmail.com',
-                attachmentsPattern: 'build_result.txt'
+                from: 'jihoon20130@gmail.com',
+			    replyTo: 'jihoon20130@gmail.com',
+			    attachmentsPattern: '**/build_result.txt'
             )
         }
     }

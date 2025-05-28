@@ -35,7 +35,7 @@ class StudentManagerTest {
 	    });
 	}
 
-	@Test // 임시 주석
+	@Test // 임시 주석1
 	void testRemoveNonExistStudent() {
 		assertThrows(IllegalArgumentException.class, () -> {
 	        sm.removeStudent("Student1");
